@@ -1,0 +1,49 @@
+{
+  "blockHeadOld": [
+    "None",
+    "Type",
+    "Exercise",
+    "Sets x Reps",
+    "RPE",
+    "%1RM",
+    "RIR",
+    "TST",
+    "Load",
+    "Rest Time",
+    "Instructions"
+  ],
+  "blockHead": [
+    "Type",
+    "Exercise",
+    "Sets x Reps",
+    "Intensity",
+    "Load",
+    "Rest Time",
+    "Instructions"
+  ],
+  "intensity": [
+    "RPE",
+    "RIR",
+    "%1RM"
+  ],
+  "exerciseType": [
+    "Muscle-Up",
+    "Pull-Up",
+    "Dips",
+    "Squat",
+    "Figure",
+    "Accessories"
+  ],
+  "rpe": [
+    "<@6,0",
+    "@6,0",
+    "@6,5",
+    "@7,0",
+    "@7,5",
+    "@8,0",
+    "@8,5",
+    "@9,0",
+    "@9,5",
+    "@10"
+  ]
+}
