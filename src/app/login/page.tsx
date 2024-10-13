@@ -35,14 +35,13 @@ export default function Page() {
     }
 
     return (
-        <Flex minHeight="100vh" align="center" justify="center" bg="gray.50">
+        <Flex minHeight="100vh" align="center" justify="center">
             <Box
                 p={8}
                 maxWidth="400px"
                 borderWidth={1}
                 borderRadius={8}
                 boxShadow="lg"
-                bg="white"
             >
                 <Box textAlign="center" mb={6}>
                     <Heading>Login</Heading>

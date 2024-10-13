@@ -7,7 +7,6 @@ import { addDays, subDays, format, getISOWeek, getDay, getYear } from "date-fns"
 const DaySelector = ({ onSelectDate }: { onSelectDate: (day: number, week: number, year: number) => void }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
 
-    // Génère 7 jours autour de la date sélectionnée
     const generateDaysAround = (date: Date) => {
         return Array.from({ length: 7 }, (_, i) => addDays(subDays(date, 3), i));
     };
@@ -17,7 +16,7 @@ const DaySelector = ({ onSelectDate }: { onSelectDate: (day: number, week: numbe
     const handleDateSelect = (date: Date) => {
         setSelectedDate(date);
 
-        const dayOfWeek = getDay(date) === 0 ? 7 : getDay(date);  // Dimanche = 7
+        const dayOfWeek = getDay(date) === 0 ? 7 : getDay(date);
         const weekOfYear = getISOWeek(date);
         const year = getYear(date);
 
@@ -26,13 +25,12 @@ const DaySelector = ({ onSelectDate }: { onSelectDate: (day: number, week: numbe
         setDaysOfWeek(generateDaysAround(date));
     };
 
-    // Sélectionne la date du jour automatiquement au premier rendu
     useEffect(() => {
         handleDateSelect(new Date());
     }, []);
 
     return (
-        <Box w="100%" p={2} bg="gray.200">
+        <Box w="100%" p={2}>
             <HStack justifyContent="center" alignItems="center" spacing={4}>
                 <HStack overflowX="scroll" spacing={4}>
                     {daysOfWeek.map((date, index) => (

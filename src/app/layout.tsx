@@ -5,6 +5,9 @@ import {ReduxProvider} from "@/app/redux/provider";
 import {ChakraProvider} from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react";
 import {usePathname} from "next/navigation";
+import { ColorModeScript } from '@chakra-ui/react'
+import theme from '@/theme'
+
 
 export default function RootLayout(
     {
@@ -25,6 +28,7 @@ export default function RootLayout(
         <body>
         <ReduxProvider>
             <ChakraProvider>
+                <ColorModeScript initialColorMode={theme.config.initialColorMode} />
                 {/*<Navbar />*/}
                 <Box as="main" ml={showNavBar ? { base: "0", md: "180px" }: "0"} p="4">
                     {children}

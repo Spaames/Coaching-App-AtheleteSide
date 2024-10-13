@@ -4,8 +4,26 @@ import DaySelector from "@/app/components/DaySelector";
 import { useEffect, useState } from "react";
 import { Block, getBlocksThunk, Exercise } from "@/app/redux/features/blockSlice";
 import { useAppSelector, useAppDispatch } from "@/app/redux/hooks";
+import {
+    Box,
+    Card, CardBody,
+    CardHeader,
+    Heading,
+    HStack,
+    Input, Stack, StackDivider,
+    Table,
+    TableContainer,
+    Tbody,
+    Td, Text, Textarea,
+    Thead,
+    Tr
+} from "@chakra-ui/react";
+import data from "@/lib/data.json";
+import ExerciceList from "@/app/components/ExerciceList";
+
 
 export default function Page() {
+    const columns = data.blockHead;
     const dispatch = useAppDispatch();
     const athlete = useAppSelector((state) => state.auth.user.username);
     const blockListStore = useAppSelector((state) => state.block.blocks);
@@ -51,28 +69,50 @@ export default function Page() {
     };
 
     return (
-        <div>
+        <Box w="100%">
             <DaySelector onSelectDate={handleDateChange} />
             {blockActual && (
-                <div>
-                    <h2>Bloc actuel : {blockActual.name}</h2>
-                    {/* Afficher les exercices du jour */}
-                    <div>
-                        <h3>Exercices du jour</h3>
-                        {exercisesOfTheDay.length > 0 ? (
-                            <ul>
-                                {exercisesOfTheDay.map((exercise, index) => (
-                                    <li key={index}>
-                                        <strong>{exercise.name}</strong> : {exercise.sets} séries x {exercise.reps} reps, Intensité : {exercise.intensity?.value}, Charge : {exercise.load} kg, Repos : {exercise.rest}
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p>Aucun exercice pour ce jour.</p>
-                        )}
-                    </div>
-                </div>
+                <ExerciceList exercises={exercisesOfTheDay} />
             )}
-        </div>
+        </Box>
+    )
+
+    /*return (
+        <Box w="100%">
+            <DaySelector onSelectDate={handleDateChange} />
+            {blockActual && (
+                <Card>
+                    <CardHeader>
+                        <Heading size="lg">
+                            {blockActual.name}
+                            {exercisesOfTheDay.length > 0 ? ("Week : " + exercisesOfTheDay[0].week) : ""}
+                        </Heading>
+                    </CardHeader>
+
+                    <CardBody>
+                        <Stack divider={<StackDivider />} spacing='4'>
+                            {exercisesOfTheDay.length > 0 && (
+                                exercisesOfTheDay.map((exercise, index) => (
+                                    <Box key={index}>
+                                        <Heading size='md'>
+                                            {exercise.name + " -- " + exercise.sets + " x " + exercise.reps}
+                                        </Heading>
+                                        {exercise.sets !== undefined && (
+                                            Array.from({ length: exercise.sets}, (_, index) => (
+                                                <Text key={index} pt="2" fontSize="sm">
+                                                    {exercise.name}
+                                                </Text>
+                                            ))
+                                        )}
+                                    </Box>
+                                ))
+                            )}
+                        </Stack>
+                    </CardBody>
+                </Card>
+            )}
+        </Box>
     );
+
+     */
 }
