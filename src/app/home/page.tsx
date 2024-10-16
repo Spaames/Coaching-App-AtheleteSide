@@ -19,7 +19,7 @@ import {
     Tr
 } from "@chakra-ui/react";
 import data from "@/lib/data.json";
-import ExerciceList from "@/app/components/ExerciceList";
+import ExerciseList from "@/app/components/ExerciseList";
 
 
 export default function Page() {
@@ -72,47 +72,8 @@ export default function Page() {
         <Box w="100%">
             <DaySelector onSelectDate={handleDateChange} />
             {blockActual && (
-                <ExerciceList exercises={exercisesOfTheDay} />
-            )}
-        </Box>
-    )
-
-    /*return (
-        <Box w="100%">
-            <DaySelector onSelectDate={handleDateChange} />
-            {blockActual && (
-                <Card>
-                    <CardHeader>
-                        <Heading size="lg">
-                            {blockActual.name}
-                            {exercisesOfTheDay.length > 0 ? ("Week : " + exercisesOfTheDay[0].week) : ""}
-                        </Heading>
-                    </CardHeader>
-
-                    <CardBody>
-                        <Stack divider={<StackDivider />} spacing='4'>
-                            {exercisesOfTheDay.length > 0 && (
-                                exercisesOfTheDay.map((exercise, index) => (
-                                    <Box key={index}>
-                                        <Heading size='md'>
-                                            {exercise.name + " -- " + exercise.sets + " x " + exercise.reps}
-                                        </Heading>
-                                        {exercise.sets !== undefined && (
-                                            Array.from({ length: exercise.sets}, (_, index) => (
-                                                <Text key={index} pt="2" fontSize="sm">
-                                                    {exercise.name}
-                                                </Text>
-                                            ))
-                                        )}
-                                    </Box>
-                                ))
-                            )}
-                        </Stack>
-                    </CardBody>
-                </Card>
+                <ExerciseList exercises={exercisesOfTheDay} block={blockActual} />
             )}
         </Box>
     );
-
-     */
 }

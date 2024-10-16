@@ -6,13 +6,21 @@ export interface Intensity {
     value?: number | null;
 }
 
+export interface Perf {
+    set: number;
+    reps: number;
+    load: number;
+    note: string;
+}
+
 export interface Exercise {
     type?: string;
     name?: string;
     sets?: number;
-    reps?: number;
+    indicatedReps?: string;
     intensity?: Intensity | null;
-    load?: number;
+    indicatedLoad?: string;
+    realPerf: Perf[];
     rest?: string;
     instructions?: string;
     day: number;
@@ -122,7 +130,7 @@ export const updateBlockThunk = (updatedBlock: Block): AppThunk => async (dispat
             dispatch(updateBlockSuccess(updatedBlock));
             console.log(data.message);
         } else {
-            dispatch(getBlocksFailure(data.message));
+            dispatch(updateBlockFailure(data.message));
         }
     } catch {
         dispatch(updateBlockFailure("Error while updating block"));
