@@ -5,44 +5,29 @@ import { useEffect, useState } from "react";
 import { Block, getBlocksThunk, Exercise } from "@/app/redux/features/blockSlice";
 import { useAppSelector, useAppDispatch } from "@/app/redux/hooks";
 import {
-    Box,
-    Card, CardBody,
-    CardHeader,
-    Heading,
-    HStack,
-    Input, Stack, StackDivider,
-    Table,
-    TableContainer,
-    Tbody,
-    Td, Text, Textarea,
-    Thead,
-    Tr
+    Badge,
+    Box, Card, CardBody, Heading
 } from "@chakra-ui/react";
-import data from "@/lib/data.json";
 import ExerciseList from "@/app/components/ExerciseList";
 
 
 export default function Page() {
-    const columns = data.blockHead;
     const dispatch = useAppDispatch();
     const athlete = useAppSelector((state) => state.auth.user.username);
     const blockListStore = useAppSelector((state) => state.block.blocks);
     const [blockActual, setBlockActual] = useState<Block | null>(null);
     const [exercisesOfTheDay, setExercisesOfTheDay] = useState<Exercise[]>([]);
 
-    // Charger les blocs au premier rendu
     useEffect(() => {
         if (athlete) {
             dispatch(getBlocksThunk(athlete));
         }
     }, [athlete, dispatch]);
 
-    // Gestion du changement de date
     const handleDateChange = (day: number, week: number, year: number) => {
         console.log(`Jour : ${day}, Semaine : ${week}-${year}`);
         console.log("Blocs :", blockListStore);
 
-        // Logique pour récupérer le bloc actuel
         const currentBlock = blockListStore.find(block => {
             const [startWeek, startYear] = block.start!.split('-').map(Number);
             const [endWeek, endYear] = block.end!.split('-').map(Number);
@@ -71,8 +56,26 @@ export default function Page() {
     return (
         <Box w="100%">
             <DaySelector onSelectDate={handleDateChange} />
-            {blockActual && (
-                <ExerciseList exercises={exercisesOfTheDay} block={blockActual} />
+            {blockActual ? (
+                exercisesOfTheDay.length > 0 ? (
+                    <ExerciseList exercises={exercisesOfTheDay} block={blockActual} />
+                ) : (
+                    <Box>
+                        <Card>
+                            <CardBody>
+                                <Heading size='xs'><Badge> No sessions for this Day on block : {blockActual.name}</Badge></Heading>
+                            </CardBody>
+                        </Card>
+                    </Box>
+                )
+            ) : (
+                <Box>
+                    <Card>
+                        <CardBody>
+                            <Heading size='xs'><Badge>No bloc on this date :/</Badge></Heading>
+                        </CardBody>
+                    </Card>
+                </Box>
             )}
         </Box>
     );

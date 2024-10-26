@@ -10,6 +10,7 @@ export interface Perf {
     set: number;
     reps: number;
     load: number;
+    rpe: number;
     note: string;
 }
 
