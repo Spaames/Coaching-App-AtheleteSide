@@ -23,6 +23,7 @@ import {
 } from "@chakra-ui/react";
 import {Block, Exercise, updateBlockThunk} from "@/app/redux/features/blockSlice";
 import {useAppDispatch} from "@/app/redux/hooks";
+import jsPDF from "jspdf";
 
 interface ExerciseListProps {
     exercises: Exercise[];
@@ -93,12 +94,60 @@ const ExerciseList = ({ exercises, block}: ExerciseListProps) => {
         dispatch(updateBlockThunk(updatedBlock));
     }
 
+    const handleExportPdf = () => {
+        const doc = new jsPDF();
+
+        const updatedExercises: Exercise[] = handleCreationExercises();
+
+        doc.setFontSize(18);
+        doc.text("Session's overview", 20, 20);
+
+        doc.setFontSize(12);
+        let yOffset = 30;
+        updatedExercises.forEach((exercise, index) => {
+            doc.text(`${index + 1}. ${exercise.name}`, 20, yOffset);
+            yOffset += 7;
+            exercise.realPerf.forEach((realPerf) => {
+                doc.text(`${realPerf.reps} x ${realPerf.load} -- @${realPerf.rpe}`, 20, yOffset);
+                yOffset += 5;
+            });
+            yOffset += 5;
+        });
+        window.open(doc.output("bloburl"), "_blank");
+    }
+
+    const handleColor = (type: string): string => {
+        switch (type) {
+            case "Muscle-Up":
+                return "color"
+            case "Pull-Up":
+                return "#F6AD55"
+            case "Dips":
+                return "#9F7AEA"
+            case "Bench":
+                return "color"
+            case "Deadlift":
+                return "color"
+            case "Squat":
+                return "#4299E1"
+            case "Figure":
+                return "color"
+            case "Accessories":
+                return "color"
+        }
+        return "gray";
+    }
+
     return (
         <Box w="100%">
             {exercisesByType.map((group, index) => (
                 <Card key={index} w="100%">
                     <CardHeader>
-                        <Heading size='md'><Badge fontSize='1em'>{group.type}</Badge></Heading>
+                        {group.type ? (
+                            <Heading size='md'><Badge backgroundColor={handleColor(group.type)} fontSize='1em'>{group.type}</Badge></Heading>
+                        ) : (
+                            <p>error</p>
+                        )}
                     </CardHeader>
                     <CardBody>
                         <Stack spacing={4} divider={<StackDivider />}>
@@ -157,13 +206,13 @@ const ExerciseList = ({ exercises, block}: ExerciseListProps) => {
                                                                                 >
                                                                                     <option value="n/a">--RPE--</option>
                                                                                     <option value="6">@6,0</option>
-                                                                                    <option value="6,5">@6,5</option>
+                                                                                    <option value="6.5">@6,5</option>
                                                                                     <option value="7">@7,0</option>
                                                                                     <option value="7.5">@7,5</option>
                                                                                     <option value="8">@8,0</option>
-                                                                                    <option value="8,5">@8,5</option>
+                                                                                    <option value="8.5">@8,5</option>
                                                                                     <option value="9">@9,0</option>
-                                                                                    <option value="9,5">@9,5</option>
+                                                                                    <option value="9.5">@9,5</option>
                                                                                     <option value="10">@10</option>
                                                                                 </Select>
                                                                             </Td>
@@ -193,6 +242,9 @@ const ExerciseList = ({ exercises, block}: ExerciseListProps) => {
                 </Card>
             ))}
             <Button width="100%" onClick={handleSave} colorScheme="green" fontSize="sm">Save</Button>
+            <Button onClick={handleExportPdf} colorScheme="blue" mt={4}>
+                Exporter en PDF
+            </Button>
         </Box>
     )
 };
