@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ message: "Username and password required"});
         }
         const mongoClient = await mongoClientPromise;
-        const db = mongoClient.db("rmManagerDev");
+        const db = mongoClient.db("rmManagerProd");
         const usersCollection = db.collection("users");
 
         const existingUser = await usersCollection.findOne({ username });
