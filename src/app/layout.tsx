@@ -7,6 +7,7 @@ import { Box } from "@chakra-ui/react";
 import {usePathname} from "next/navigation";
 import { ColorModeScript } from '@chakra-ui/react'
 import theme from '@/theme'
+import Navbar from "@/app/components/Navbar";
 
 
 export default function RootLayout(
@@ -29,7 +30,7 @@ export default function RootLayout(
         <ReduxProvider>
             <ChakraProvider>
                 <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-                {/*<Navbar />*/}
+                <Navbar />
                 <Box as="main" ml={showNavBar ? { base: "0", md: "180px" }: "0"} p="4">
                     {children}
                 </Box>

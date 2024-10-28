@@ -119,21 +119,21 @@ const ExerciseList = ({ exercises, block}: ExerciseListProps) => {
     const handleColor = (type: string): string => {
         switch (type) {
             case "Muscle-Up":
-                return "color"
+                return "#2D3748"
             case "Pull-Up":
-                return "#F6AD55"
+                return "#975A16"
             case "Dips":
-                return "#9F7AEA"
+                return "#553C9A"
             case "Bench":
-                return "color"
+                return "#97266D"
             case "Deadlift":
-                return "color"
+                return "#9B2C2C"
             case "Squat":
-                return "#4299E1"
+                return "#2c5282"
             case "Figure":
-                return "color"
+                return "#0987A0"
             case "Accessories":
-                return "color"
+                return "#276749"
         }
         return "gray";
     }
@@ -241,8 +241,8 @@ const ExerciseList = ({ exercises, block}: ExerciseListProps) => {
                     </CardBody>
                 </Card>
             ))}
-            <Button width="100%" onClick={handleSave} colorScheme="green" fontSize="sm">Save</Button>
-            <Button onClick={handleExportPdf} colorScheme="blue" mt={4}>
+            <Button width="100%" onClick={handleSave} colorScheme="green" fontSize="sm" mt={4}>Save</Button>
+            <Button width={"100%"} onClick={handleExportPdf} colorScheme="blue" fontSize={"sm"} mt={4}>
                 Exporter en PDF
             </Button>
         </Box>

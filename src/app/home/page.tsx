@@ -9,6 +9,7 @@ import {
     Box, Card, CardBody, Heading
 } from "@chakra-ui/react";
 import ExerciseList from "@/app/components/ExerciseList";
+import {getDay, getISOWeek, getYear} from "date-fns";
 
 
 export default function Page() {
@@ -24,9 +25,28 @@ export default function Page() {
         }
     }, [athlete, dispatch]);
 
+    useEffect(() => {
+        if (blockListStore && blockListStore.length > 0) {
+            const today = new Date();
+            const dayOfWeek = getDay(today) === 0 ? 7 : getDay(today);
+            const weekOfYear = getISOWeek(today);
+            const year = getYear(today);
+
+            handleDateChange(dayOfWeek, weekOfYear, year);
+        }
+    }, [blockListStore]);
+
+
     const handleDateChange = (day: number, week: number, year: number) => {
         console.log(`Jour : ${day}, Semaine : ${week}-${year}`);
         console.log("Blocs :", blockListStore);
+
+        if (!blockListStore) {
+            console.log("Aucun bloc disponible.");
+            setBlockActual(null);
+            setExercisesOfTheDay([]);
+            return;
+        }
 
         const currentBlock = blockListStore.find(block => {
             const [startWeek, startYear] = block.start!.split('-').map(Number);
@@ -52,6 +72,7 @@ export default function Page() {
             setExercisesOfTheDay([]);
         }
     };
+
 
     return (
         <Box w="100%">
