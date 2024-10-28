@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
 import { Box, HStack, Button, Text } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { addDays, subDays, format, getISOWeek, getDay, getYear } from "date-fns";
 
 const DaySelector = ({ onSelectDate }: { onSelectDate: (day: number, week: number, year: number) => void }) => {
@@ -13,7 +13,7 @@ const DaySelector = ({ onSelectDate }: { onSelectDate: (day: number, week: numbe
 
     const [daysOfWeek, setDaysOfWeek] = useState(generateDaysAround(selectedDate));
 
-    const handleDateSelect = (date: Date) => {
+    const handleDateSelect = useCallback((date: Date) => {
         setSelectedDate(date);
 
         const dayOfWeek = getDay(date) === 0 ? 7 : getDay(date);
@@ -23,11 +23,11 @@ const DaySelector = ({ onSelectDate }: { onSelectDate: (day: number, week: numbe
         onSelectDate(dayOfWeek, weekOfYear, year);
 
         setDaysOfWeek(generateDaysAround(date));
-    };
+    }, [onSelectDate]);
 
     useEffect(() => {
         handleDateSelect(new Date());
-    }, []);
+    }, [handleDateSelect]);
 
     return (
         <Box w="100%" p={2}>

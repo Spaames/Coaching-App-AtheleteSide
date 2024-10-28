@@ -1,8 +1,8 @@
 "use client"
 
-import {Box, Button, Flex, Icon, Link, Text, useColorMode, useDisclosure} from "@chakra-ui/react";
-import { FaHome, FaBars } from "react-icons/fa";
-import { useEffect, ReactNode, ElementType, FormEvent } from "react";
+import {Box, Button, Flex, Icon, Text, useColorMode, useDisclosure} from "@chakra-ui/react";
+import { FaBars } from "react-icons/fa";
+import { useEffect, FormEvent } from "react";
 import { useAppSelector, useAppDispatch } from "@/app/redux/hooks";
 import { login, logout } from "@/app/redux/features/authSlice";
 import {usePathname, useRouter} from "next/navigation";
@@ -80,12 +80,13 @@ export default function Navbar() {
         </Box>
     );
 }
-
+/*
 interface NavItemProps {
     icon: ElementType;
     children: ReactNode;
     href: string;
 }
+
 
 const NavItem: React.FC<NavItemProps> = ({ icon, children, href }) => {
     return (
@@ -97,3 +98,4 @@ const NavItem: React.FC<NavItemProps> = ({ icon, children, href }) => {
         </Link>
     );
 };
+ */

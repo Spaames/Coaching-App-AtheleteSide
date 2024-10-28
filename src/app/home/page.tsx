@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
 import DaySelector from "@/app/components/DaySelector";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Block, getBlocksThunk, Exercise } from "@/app/redux/features/blockSlice";
 import { useAppSelector, useAppDispatch } from "@/app/redux/hooks";
 import {
@@ -9,8 +9,7 @@ import {
     Box, Card, CardBody, Heading
 } from "@chakra-ui/react";
 import ExerciseList from "@/app/components/ExerciseList";
-import {getDay, getISOWeek, getYear} from "date-fns";
-
+import { getDay, getISOWeek, getYear } from "date-fns";
 
 export default function Page() {
     const dispatch = useAppDispatch();
@@ -25,19 +24,7 @@ export default function Page() {
         }
     }, [athlete, dispatch]);
 
-    useEffect(() => {
-        if (blockListStore && blockListStore.length > 0) {
-            const today = new Date();
-            const dayOfWeek = getDay(today) === 0 ? 7 : getDay(today);
-            const weekOfYear = getISOWeek(today);
-            const year = getYear(today);
-
-            handleDateChange(dayOfWeek, weekOfYear, year);
-        }
-    }, [blockListStore]);
-
-
-    const handleDateChange = (day: number, week: number, year: number) => {
+    const handleDateChange = useCallback((day: number, week: number, year: number) => {
         console.log(`Jour : ${day}, Semaine : ${week}-${year}`);
         console.log("Blocs :", blockListStore);
 
@@ -71,8 +58,16 @@ export default function Page() {
             console.log("Aucun bloc trouvé pour cette date.");
             setExercisesOfTheDay([]);
         }
-    };
+    }, [blockListStore]);
 
+    useEffect(() => {
+        const today = new Date();
+        const dayOfWeek = getDay(today) === 0 ? 7 : getDay(today);
+        const weekOfYear = getISOWeek(today);
+        const year = getYear(today);
+
+        handleDateChange(dayOfWeek, weekOfYear, year);
+    }, [blockListStore, handleDateChange]);
 
     return (
         <Box w="100%">
