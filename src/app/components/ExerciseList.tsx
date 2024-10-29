@@ -19,7 +19,7 @@ import {
     Input,
     Tbody,
     Td,
-    AccordionIcon, Button, Select
+    AccordionIcon, Button
 } from "@chakra-ui/react";
 import {Block, Exercise, updateBlockThunk} from "@/app/redux/features/blockSlice";
 import {useAppDispatch} from "@/app/redux/hooks";
@@ -50,22 +50,16 @@ const ExerciseList = ({ exercises, block}: ExerciseListProps) => {
                     const repsId = `${exercise.name}-${setIndex}-reps`;
                     const loadId = `${exercise.name}-${setIndex}-load`;
                     const noteId = `${exercise.name}-${setIndex}-note`;
-                    const rpeId = `${exercise.name}-${setIndex}-rpe`;
-                    console.log(rpeId);
 
                     const set = setIndex + 1;
                     const reps = (document.getElementById(repsId) as HTMLInputElement)?.value;
                     const load = (document.getElementById(loadId) as HTMLInputElement)?.value;
                     const note = (document.getElementById(noteId) as HTMLInputElement)?.value;
-                    const rpe = (document.getElementById(rpeId) as HTMLInputElement)?.value;
-
-                    console.log(rpe);
 
                     updatedSets.push({
                         set: set,
                         reps: parseInt(reps),
                         load: parseInt(load),
-                        rpe: parseFloat(rpe),
                         note: note,
                     });
 
@@ -108,7 +102,7 @@ const ExerciseList = ({ exercises, block}: ExerciseListProps) => {
             doc.text(`${index + 1}. ${exercise.name}`, 20, yOffset);
             yOffset += 7;
             exercise.realPerf.forEach((realPerf) => {
-                doc.text(`${realPerf.reps} x ${realPerf.load} -- @${realPerf.rpe}`, 20, yOffset);
+                doc.text(`${realPerf.reps} x ${realPerf.load}`, 20, yOffset);
                 yOffset += 5;
             });
             yOffset += 5;
@@ -168,9 +162,8 @@ const ExerciseList = ({ exercises, block}: ExerciseListProps) => {
                                                             <Tr>
                                                                 <Th>Set</Th>
                                                                 <Th>Reps</Th>
-                                                                <Th>{exercise.intensity?.type}</Th>
+                                                                <Th>Intensity</Th>
                                                                 <Th>Load</Th>
-                                                                <Th>RPE Perceived</Th>
                                                                 <Th>Instructions</Th>
                                                                 <Th>Notes</Th>
                                                             </Tr>
@@ -190,7 +183,7 @@ const ExerciseList = ({ exercises, block}: ExerciseListProps) => {
                                                                                     minW={20}
                                                                                 />
                                                                             </Td>
-                                                                            <Td>{exercise.intensity?.value}</Td>
+                                                                            <Td>{exercise.intensity}</Td>
                                                                             <Td>
                                                                                 <Input
                                                                                     id={`${exercise.name}-${index}-load`}
@@ -198,23 +191,6 @@ const ExerciseList = ({ exercises, block}: ExerciseListProps) => {
                                                                                     placeholder={exercise.indicatedLoad}
                                                                                     minW={20}
                                                                                 />
-                                                                            </Td>
-                                                                            <Td>
-                                                                                <Select
-                                                                                    id={`${exercise.name}-${index}-rpe`}
-                                                                                    minWidth="auto"
-                                                                                >
-                                                                                    <option value="n/a">--RPE--</option>
-                                                                                    <option value="6">@6,0</option>
-                                                                                    <option value="6.5">@6,5</option>
-                                                                                    <option value="7">@7,0</option>
-                                                                                    <option value="7.5">@7,5</option>
-                                                                                    <option value="8">@8,0</option>
-                                                                                    <option value="8.5">@8,5</option>
-                                                                                    <option value="9">@9,0</option>
-                                                                                    <option value="9.5">@9,5</option>
-                                                                                    <option value="10">@10</option>
-                                                                                </Select>
                                                                             </Td>
                                                                             <Td>{exercise.instructions}</Td>
                                                                             <Td>

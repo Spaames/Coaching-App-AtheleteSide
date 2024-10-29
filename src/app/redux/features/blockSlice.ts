@@ -1,16 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk } from "@/app/redux/store";
 
-export interface Intensity {
-    type?: string | null;
-    value?: number | null;
-}
-
 export interface Perf {
     set: number;
     reps: number;
     load: number;
-    rpe: number;
     note: string;
 }
 
@@ -19,7 +13,7 @@ export interface Exercise {
     name?: string;
     sets?: number;
     indicatedReps?: string;
-    intensity?: Intensity | null;
+    intensity?: string | null;
     indicatedLoad?: string;
     realPerf: Perf[];
     rest?: string;

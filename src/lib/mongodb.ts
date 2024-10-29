@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 
-export const dbName: string = 'rmManagerProd';
+export const dbName: string = 'rmManagerDev';
 const uriDb = process.env.MONGODB_URI as string;
 const options = {}
 
