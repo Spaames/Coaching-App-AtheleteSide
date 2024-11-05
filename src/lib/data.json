@@ -14,6 +14,7 @@
   ],
   "blockHead": [
     "Type",
+    "Muscles Used",
     "Exercise",
     "Sets x Reps",
     "Intensity",
@@ -30,8 +31,6 @@
     "Muscle-Up",
     "Pull-Up",
     "Dips",
-    "Bench",
-    "Deadlift",
     "Squat",
     "Figure",
     "Accessories"
@@ -47,5 +46,23 @@
     "@9,0",
     "@9,5",
     "@10"
+  ],
+  "muscles": [
+    "None",
+    "Abdominal",
+    "Adductors",
+    "Back",
+    "Biceps",
+    "Calves",
+    "Front Delts",
+    "Lateral Delts",
+    "Rear Delts",
+    "Forearms",
+    "Glutes",
+    "Hamstrings",
+    "Lower Back",
+    "Pectorals",
+    "Quadriceps",
+    "Triceps"
   ]
 }
